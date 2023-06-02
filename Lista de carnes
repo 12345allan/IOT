@@ -1,0 +1,50 @@
+carnes = {
+    "Alcatra(kg)": 25.99,
+    "Picanha(kg)": 35.99,
+    "Filé Mignon(kg)": 45.99,
+    "Contrafilé(kg)": 35.99,
+    "Fraldinha(kg)": 30.99,
+    "Costela(kg)": 25.90,
+    "Peito de Frango(kg)": 15.90,
+    "Coxa de Frango(kg)": 9.90,
+    "Salsicha(kg)": 7.90
+}
+
+carnes_numeradas = {indice + 1: carne for indice, carne in enumerate(carnes)}
+
+def exibir_menu():
+    print("\n----------- Lista de Carnes -----------")
+    for numero, carne in carnes_numeradas.items():
+        print(f"{numero}. {carne}: R${carnes[carne]:.2f}")
+    print("---------------------------------------\n")
+
+def alterar_preco(carne):
+    novo_preco_str = input(f"\nDigite o novo preço para {carne} Ex(25,90): R$")
+    novo_preco_str = novo_preco_str.replace(',', '.')  # Substituir vírgula por ponto
+    novo_preco = float(novo_preco_str)
+    carnes[carne] = novo_preco
+
+nome_pessoa = input("+----------------------------------------------+\n Bem-vindo(a) ao menu de carnes de nossa loja!!\n+----------------------------------------------+\n\nInforme o seu primeiro nome:\n")
+
+continuar = True
+
+while continuar:
+    exibir_menu()
+    
+    resposta = input("Deseja alterar o preço de alguma carne?\n \nDigite (s) para SIM ou (n) para NÃO: ")
+    
+    if resposta.lower() == "s":
+        while True:
+            carne_alterar = int(input("\nQual carne da lista deseja alterar o preço? Ex(2): "))
+            if carne_alterar in carnes_numeradas:
+                carne = carnes_numeradas[carne_alterar]
+                alterar_preco(carne)
+                break  # Sair do loop se o número da carne for válido
+            else:
+                print("\n+-----------------------------------------------------+\n Número da carne inválida!\n\n Digite o número correto da carne em relação a lista!\n+-----------------------------------------------------+\n")
+    else:
+        if resposta.lower() == "n":
+            continuar = False
+            print(f"\n+------------------------------------------------+\n   Certo, obrigado pela consulta {nome_pessoa}!\n+------------------------------------------------+")
+        else:
+            print("\nResposta inválida! Por favor, digite apenas 's' para sim ou 'n' para não.")
